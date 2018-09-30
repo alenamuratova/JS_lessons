@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <h5>Здравствуйте, я Ваша кофеварка. Как к Вам обращаться? </h5>
+    <input type="text" size="40" value="" class="name">
+
+    <h5 id='coffieName'></h5>
+    <form id='formInputs' style="display: none">
+        <input type="radio" value="yes"> Да<br>
+        <input type="radio" value="no"> Нет
+    </form>
+    <hr>
+	<button class="stop" onclick="vitek.stop()" style="display: none">Выключить приготовление кофе</button>
+
+
+<script>
+
+
+/* ДЗ
+доработать кофеварку
++ ввести значение зерен
++ проверка на пустую кофеварку
++ реализовать кнопку стоп
+* время приготовления зависит от кол-ва зерен
+
+*/
+
+	
+	 var element = document.getElementsByClassName('name');
+        var spanName = document.getElementById('coffieName');
+        var formInputs = document.getElementById('formInputs');
+
+        var nameValue;
+        var answer;
+
+        function askCoffie(name) {
+            alert('Я к твоим услугам, ' + name + '.');
+        }
+
+        element[0].addEventListener("change", function() {
+            nameValue = element[0].value;
+            answer = askCoffie(nameValue);
+
+            spanName.innerHTML = 'Может кофе, ' + nameValue + ' ?';
+            formInputs.style.display = 'inline-block';
+
+        });
+
+	var waterAmount = 0
+	// колличество зерен 
+	var beans = 0;
+	// колличество воды в кофеварке
+
+    function CoffeeMachine(power) {
+      // удельная теплоемкость воды
+      const waterHeatCapacity = 4200
+      // температура воды до которой греем
+      const maxTemp = 90
+     
+
+      this.fillWater = function (newAmount) {
+      	var newAmount = prompt ("Введите значение воды числом от 10 до 150 мл");
+        if (newAmount < 10) {
+        	alert('Слишком мало воды!');
+        }
+        else if (newAmount > 150) {
+			alert('Слишком много воды!')
+        }
+        else if (newAmount >=  10 && newAmount <= 150) {
+			waterAmount = newAmount
+            console.log(waterAmount);
+        }
+        else {
+        	this.fillWater();
+        }
+      }
+
+      this.fillBeans = function (newBeans) {
+      	var newBeans = prompt ("Введите значение зерен числом от 20 до 200 гр");
+        if (newBeans < 20) {
+        	alert('Слишком мало зерен!')
+        }
+        else if (newBeans > 200) {
+			alert('Слишком много зерен!')
+        }
+        else if (newBeans >=  20 && newBeans <= 200) {
+        	beans = newBeans;
+            console.log(newBeans);
+        }
+        else {
+        	this.fillBeans();
+        }
+      }
+
+      const getBoilTime = function () {
+        return (waterAmount * waterHeatCapacity * maxTemp * beans) / power;
+      }
+
+      this.launch = function () {
+        const time = getBoilTime()
+        alert(`Время ожидания: ${time/1000} секунд`)
+        var timer = setTimeout(function () {
+          alert('Ваш кофе готов!')
+        }, time)
+        this.stop = function () {
+        	alert("Ваш кофе не будет приготовлен!")
+      		clearTimeout(timer);
+      	}
+      }
+
+    }
+
+
+    var answerYes = formInputs.children[0]; 
+    console.log(answerYes);
+    var vitek = new CoffeeMachine(12000)
+    answerYes.addEventListener("click", function() {
+        vitek.fillWater()
+        vitek.fillBeans()
+        console.log(beans);
+        console.log(waterAmount);
+        if (waterAmount >=  10 && waterAmount <= 150 && beans >=  20 && beans <= 200) {
+        	
+        	vitek.launch()
+        	var button = document.getElementsByClassName('stop');
+        	button[0].style.display = 'inline-block';
+        } else {
+        	alert("Кофе не будет! Вы указали невернные данные для запуска кофеварки.");
+        }
+    	});
+
+    var answerNo = formInputs.children[2];
+    console.log(answerNo);
+    answerNo.addEventListener("click", function() {
+    	alert("Очень жаль, у нас очень вкусный кофе!");
+    });
+
+
+</script>
+</body>
+</html>
