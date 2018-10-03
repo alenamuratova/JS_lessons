@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    
+  <div>
+    <ul class="card-text"></ul>
+  </div>
+  
+  <hr> <br>
+
+  <form action="#" class="user-form">
+    <div class="form-group">
+      <label for="InputName">Имя</label>
+      <input type="text" class="form-control" id="InputName" aria-describedby="emailHelp" placeholder="Введите Ваше имя">
+    </div>
+    <div class="form-group">
+      <label for="InputEmail">Email</label>
+      <input type="email" class="form-control" id="InputEmail" placeholder="Введите Ваш email">
+    </div>
+    <div class="form-group">
+      <label for="InputAge">Возраст</label>
+      <input type="number" class="form-control" id="InputAge placeholder="Введите Ваш возраст">
+    </div>
+    <button type="submit" onclick="massiv()">Отправить</button>
+  </form>
+  <hr> <br>
+  <form action="#" class="get-user">
+    <label for="UserID">ID</label>
+      <input type="number" class="form-control" id="UserID" placeholder="Введите ID пользователя">
+      <button type="submit" onclick="getUser()">Отправить запрос по пользователю</button>
+  </form>
+</div>
+
+
+<script>
+/* ДЗ
+1. Реализовать вывод списка пользователей(http://89.108.65.123/user)
+2. Реализовать возможность просмотра информации по конкретному пользователю(http://89.108.65.123/user/1) при клике на пользователя в списке
+3. Создать форму для создания пользователя */
+
+
+const inputs = [ ... document.querySelectorAll('.user-form input')];
+const  UserIdInput = document.querySelector('.get-user input');
+
+
+function massiv () {
+  const [ name, email, age ] = inputs.map(function(input) {
+    return input.value;
+  });
+  console.log(name, email, age);
+  const userObj = {
+    name,
+    email,
+    age
+  };
+  const request = new XMLHttpRequest();
+  request.open('POST', 'http://89.108.65.123/user');
+  request.send(JSON.stringify(userObj));
+  request.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("Пользователь" + name + " создан!");
+     }
+  };
+};
+
+
+
+
+const getUsers = function() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://89.108.65.123/user');
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      const users = JSON.parse(xhr.responseText);
+      users.forEach( function (user) {
+        const cardUsers = document.querySelector('.card-text');
+        cardUsers.innerHTML += '<li> ' + user.name + ' ' + user.email + ' ' + user.age + ' </li>';
+      });
+    }
+  };   
+};
+getUsers();
+
+
+
+const getUser = function() {
+  const userId = UserIdInput.value;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://89.108.65.123/user/' + userId);
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      const user = JSON.parse(xhr.responseText);
+      console.log('Пользователь: ' + user.name + ' Email: ' + user.email + '  Возраст: ' + user.age + ' подгружен.');
+    }
+  };
+};
+
+</script>
+</body>
+</html>
