@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document3</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+  <form action="#" class="user-form">
+    <div class="form-group">
+      <label for="InputName">Имя (только русскими буквами)</label>
+      <input type="text" class="form-control" id="InputName" aria-describedby="emailHelp" placeholder="Введите Ваше имя">
+    </div>
+    <div class="form-group">
+      <label for="InputPhone">Телефон в формате +7(000)000-0000</label>
+      <input type="text" class="form-control" id="InputPhone placeholder="Введите Ваш телефон">
+    </div>
+    <div class="form-group">
+      <label for="InputEmail">Email</label>
+      <input type="email" class="form-control" id="InputEmail" placeholder="Введите Ваш email">
+    </div>
+  <div class="form-group">
+    <label for="Textarea">Текст</label>
+    <textarea class="form-control" id="Textarea" rows="3"></textarea>
+  </div>
+    <button type="submit" onclick="valid()">Отправить</button>
+  </form>
+  </div>
+
+<br><br>
+<p> "Беседа Александра Македонского с Диогено"
+Диало́г (греч. Διάλογος — "разговор") — лите'ратурная или театральная форма устного или письменного обмена высказываниями (репликами, вопросами и ответами) между двумя и более людьми, также бывает письменный диалог между двумя или более людьми по средству написания текста в письмах или другими методами; специфическая форма общения и коммуникации, диалог это вопросы и ответы двух и более оппонентов участвующих в обсуждении или разговоре чего либо. В литературе диалог — органический признак драматических жанров, но иногда является основой также и недраматических произведений, например, в русской поэзии "Разговор книгопродавца с поэтом" А. Пушкина, "Журналист, читатель и писатель" М. Лермонтова, и т. д., содержащие эстетическое и общественное кредо их авторов. Традиционно противопоставляется монологу.
+<br><br>
+Помимо осуществления коммуникации диалог может быть использован в худож'ественных целях (в литературе, кино), для передачи философских идей (например, диалоги Платона — "Федон", "Пир"), для обучения иностранному языку (как упражнение).
+<br><br>
+Происхождение Александра Сергеевича Пушкина идёт от разветвлённого нетитулованного дворянского рода Пушки'ных, восходившего по генеалогической легенде к "мужу честну" Ратше. Пушкин неоднократно писал о своей родословной в стихах и прозе; он видел в своих предках образец истинной "аристократии", древнего рода, честно служившего отечеству, но не снискавшего благосклонности правителей и "гонимого". Не раз он обращался (в том числе в художественной форме) и к образу своего прадеда по матери — африканца Абрама Петровича Ганнибала, ставшего слугой и воспитанником Петра I, а потом военным инженером и генералом.</p>
+
+<button onclick="(quotes())">Сменить кавычки=)</button>
+
+<script>
+
+function valid () {
+  const inputs = [ ... document.querySelectorAll('.user-form input')];
+
+  var name = inputs[0].value;
+  var regName = /[а-яё]/gi;
+  var validName = name.match(regName);
+  console.log(validName);
+
+  var phone = inputs[1].value;
+  var regPhone = /^(\+7)(\(\d{3}\))(\d{3})[\-](\d{4})/gi;
+  var validPhone = phone.match(regPhone);
+  console.log(validPhone);
+
+  var email = inputs[2].value;
+  var regEmail = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}/gi;
+  var validEmail = email.match(regEmail);
+  console.log(validEmail);
+
+  if (validName === null) {
+    alert("Просьба ввести корректно имя");
+    inputs[0].style.border = '4px solid red';
+  } else {
+    alert("Имя прошло проверку");
+  };
+
+  if (validPhone === null) {
+    alert("Просьба ввести корректно телефон");
+    inputs[1].style.border = '4px solid red';
+  } else {
+    alert("Телефон прошел проверку");
+  };
+
+  if (validEmail === null) {
+    alert("Просьба ввести корректно email");
+    inputs[2].style.border = '4px solid red';
+  } else {
+    alert("Email прошел проверку");
+  };
+};
+
+
+
+
+function quotes () {
+
+  var reg = /"/gi;
+  var reg1 = /^'|('+(?=[^а-яё]))|((?<=\s)')/gi;
+  var p = document.getElementsByTagName('p');
+  var text = p[0].innerHTML;
+  var quotes = text.match(reg);
+
+  if (quotes) {
+    text = text.replace(reg, "'");
+    p[0].innerHTML = text;
+  } 
+  else {
+    text = text.replace(reg1, '"');
+    p[0].innerHTML = text;
+  }
+}
+
+</script>
+</body>
+</html>
