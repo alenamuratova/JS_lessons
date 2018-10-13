@@ -1,0 +1,63 @@
+body {
+	background-color: #F0F8FF;
+}
+
+img {
+	float: left;
+	padding-right: 20px;
+}
+
+.more{
+	margin-bottom: 30px;
+}	
+
+.tabs {
+	clear: both;
+}
+
+.tabs__content {
+  	display: none; /* по умолчанию прячем все блоки */
+  	margin-left: 30px;
+  	width: 586px;
+  	background-color: #FFEFD5;
+  	border: 2px solid #0080af;
+  	border-top: none;
+  	margin: 0 30px;
+  	padding: 10px 20px;
+  	float: left;
+}
+
+.tabs__content>p {
+	margin: 0;
+}
+
+.tabs__content.active {
+	display: block; /* по умолчанию показываем нужный блок */
+}
+
+ul {
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 30px;
+	padding: 0;
+	float: left;
+}
+
+.tabs__caption>li {
+	font-size: 15px;
+	font-weight: bold;
+	background-color: #FFEFD5;
+	border: 2px solid #0080af;
+	padding: 10px 20px;
+}
+
+.container{
+	border: 2px solid #0080af;
+	margin-left: 700px;
+	padding: 10px 20px;
+}
+
+.form-group {
+	margin: 10px 0;
+}
